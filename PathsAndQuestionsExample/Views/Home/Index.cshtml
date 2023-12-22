@@ -1,0 +1,46 @@
+﻿@model UploadVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <img src="~/logo.png" width="100" /> <!-- ** WORKING LOCALLY AND ONCE DEPLOYED ** -->
+    <img src="./logo.png" width="100" /> <!-- WORKING LOCALLY BUT NOT ONCE DEPLOYED -->
+    <img src="./~/logo.png" width="100" /> <!-- NOT WORKING LOCALLY AND ONCE DEPLOYED -->
+    <img src="/logo.png" width="100" /> <!-- WORKING LOCALLY BUT NOT ONCE DEPLOYED -->
+    <img src="logo.png" width="100" /> <!-- WORKING LOCALLY BUT NOT ONCE DEPLOYED -->
+
+    <form enctype="multipart/form-data" asp-action="Upload">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="FileName" class="control-label"></label>
+                    <input asp-for="FileName" class="form-control" />
+                    <span asp-validation-for="FileName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CustomFile" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="CustomFile" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choisir le fichier</label>
+                    </div>
+                    <span asp-validation-for="CustomFile" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        @*  <div class="form-group">
+        <label asp-for="FileName" class="control-label"></label>
+        <textarea asp-for="FileName" class="form-control"></textarea>
+        <span asp-validation-for="FileName" class="text-danger"></span>
+        </div> *@
+        <div class="form-group">
+            <input type="submit" value="Enregistrer" class="btn btn-sm btn-info rounded-0 text-uppercase" />
+        </div>
+
+    </form>
+</div>
