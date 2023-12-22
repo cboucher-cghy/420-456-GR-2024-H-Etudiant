@@ -1,0 +1,38 @@
+﻿@model IEnumerable<YourCompany.Models.Subscriber>
+
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="container">
+    <h1>Subscribe to Newsletter</h1>
+    <form method="post" action="/newsletter/subscribe">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+</div>
+
+
+<div class="container">
+    <h1>Newsletter Subscribers</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Is Subscribed</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subscriber in Model)
+            {
+                <tr>
+                    <td>@subscriber.Email</td>
+                    <td>@subscriber.IsSubscribed</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

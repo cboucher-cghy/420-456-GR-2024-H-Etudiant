@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Unsubscribe from Newsletter";
+}
+
+<div class="container">
+    <h1>Unsubscribe from Newsletter</h1>
+    <form method="post" action="/newsletter/unsubscribe">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Unsubscribe</button>
+    </form>
+</div>
