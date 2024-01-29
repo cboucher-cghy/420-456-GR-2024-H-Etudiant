@@ -15,6 +15,13 @@ namespace GeniusChuck.NewsletterExample.Controllers
         }
 
         [HttpPost]
+        //[ActionName("Index")]
+        public ActionResult<List<Subscriber>> IndexPost()
+        {
+            return View(_newsletterService.GetSubscribers());
+        }
+
+        [HttpPost]
         public ActionResult<Subscriber> Subscribe(Subscriber subscriber)
         {
             _newsletterService.Subscribe(subscriber);
