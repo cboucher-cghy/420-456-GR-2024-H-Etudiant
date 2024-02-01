@@ -1,8 +1,24 @@
-﻿@{
+﻿@model Person
+@{
+    // var name = "John";
     ViewData["Title"] = "Home Page";
+    for (int index = 0; index < 5; index++)
+    {
+        if (index % 2 == 0)
+        {
+            <p>Hello #@index from the Home/Index.cshtml file</p>
+        }
+        else
+        {
+            <p class="text-danger">Hello #@index from the Home/Index.cshtml file</p>
+        }
+        // <p>Hello #@index from the Home/Index.cshtml file</p>
+        Console.WriteLine($"Hello #{index} from the Home/Index.cshtml file");
+    }
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Welcome @Model.Name</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
 </div>
