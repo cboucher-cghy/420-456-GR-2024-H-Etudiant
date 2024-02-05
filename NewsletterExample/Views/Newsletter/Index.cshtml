@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GeniusChuck.NewsletterExample.Models.Subscriber>
+﻿@model IEnumerable<SubscriberVM>
 
 @{
     ViewData["Title"] = "Accueil";
@@ -29,7 +29,7 @@
             @foreach (var subscriber in Model)
             {
                 <tr>
-                    <td>@subscriber.Email</td>
+                    <td>@subscriber.Courriel</td>
                     <td>@subscriber.IsSubscribed</td>
                 </tr>
             }

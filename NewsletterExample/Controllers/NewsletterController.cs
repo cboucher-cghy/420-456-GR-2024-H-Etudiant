@@ -1,5 +1,6 @@
 ﻿using GeniusChuck.NewsletterExample.Interfaces;
 using GeniusChuck.NewsletterExample.Models;
+using GeniusChuck.NewsletterExample.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeniusChuck.NewsletterExample.Controllers
@@ -9,23 +10,35 @@ namespace GeniusChuck.NewsletterExample.Controllers
         private readonly INewsletterService _newsletterService = newsletterService;
 
         [HttpGet]
-        public ActionResult<List<Subscriber>> Index()
+        public ActionResult<List<SubscriberVM>> Index()
         {
-            return View(_newsletterService.GetSubscribers());
+            return View(_newsletterService.GetSubscribers()
+                .Select(x =>
+                        new SubscriberVM()
+                        {
+                            Id = x.Id,
+                            Courriel = x.Email,
+                            IsSubscribed = x.IsSubscribed
+                        })
+                );
         }
 
         [HttpPost]
-        //[ActionName("Index")]
-        public ActionResult<List<Subscriber>> IndexPost()
+        [HttpPut]
+        //[AcceptVerbs(nameof(HttpMethods.Post), nameof(HttpMethods.Put))]
+        [ActionName(nameof(Index))]
+        public ActionResult<List<Subscriber>> Index(string email)
         {
-            return View(_newsletterService.GetSubscribers());
+
+            var subscribers = _newsletterService.GetSubscribers();
+            return View(subscribers);
         }
 
         [HttpPost]
-        public ActionResult<Subscriber> Subscribe(Subscriber subscriber)
+        public ActionResult Subscribe(Subscriber subscriber)
         {
             _newsletterService.Subscribe(subscriber);
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
