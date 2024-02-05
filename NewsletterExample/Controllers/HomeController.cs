@@ -8,8 +8,8 @@ namespace GeniusChuck.NewsletterExample.Controllers
     {
         //[Route("yoyoyo")]
         //[Route("admin")]
-        [Route("{controller}/{action}/{name:minlength(2)}")]
-        public IActionResult Index(string name, [FromQuery] string? lastname)
+        //[Route("{controller}/{action}/{name:minlength(2)}")]
+        public IActionResult Index(string? name, [FromQuery] string? lastname)
         {
             var person = new Person();
 
