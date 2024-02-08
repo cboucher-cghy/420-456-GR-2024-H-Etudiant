@@ -8,7 +8,7 @@ namespace GeniusChuck.NewsletterExample.Services
     {
         private readonly ApplicationDbContext _context = context;
 
-        public List<Subscriber> GetSubscribers() => _context.Subscribers.ToList();
+        public List<Subscriber> GetSubscribers() => new();//_context.Subscribers.ToList();
 
         public void Subscribe(Subscriber subscriber)
         {

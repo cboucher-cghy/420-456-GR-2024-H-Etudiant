@@ -17,7 +17,7 @@ namespace GeniusChuck.NewsletterExample.Controllers
                         new SubscriberVM()
                         {
                             Id = x.Id,
-                            Courriel = x.Email,
+                            Email = x.Email,
                             IsSubscribed = x.IsSubscribed
                         })
                 );
@@ -29,15 +29,16 @@ namespace GeniusChuck.NewsletterExample.Controllers
         [ActionName(nameof(Index))]
         public ActionResult<List<Subscriber>> Index(string email)
         {
-
-            var subscribers = _newsletterService.GetSubscribers();
-            return View(subscribers);
+            _newsletterService.Subscribe(new Subscriber() { Email = email, IsSubscribed = false });
+            TempData["Message"] = "You have been subscribed to our newsletter!";
+            return View(nameof(Index));
         }
 
         [HttpPost]
         public ActionResult Subscribe(Subscriber subscriber)
         {
-            _newsletterService.Subscribe(subscriber);
+            //_newsletterService.Subscribe(subscriber);
+            TempData["Message"] = "You have been subscribed to our newsletter!";
             return RedirectToAction(nameof(Index));
         }
 
@@ -53,6 +54,16 @@ namespace GeniusChuck.NewsletterExample.Controllers
         {
             _newsletterService.Unsubscribe(email);
             return View();
+        }
+
+        public ActionResult List()
+        {
+            return View("_SubscriptionPartial", new SubscriberVM());
+        }
+
+        public ActionResult ListPartial()
+        {
+            return PartialView("_SubscriptionPartial", new SubscriberVM());
         }
     }
 }

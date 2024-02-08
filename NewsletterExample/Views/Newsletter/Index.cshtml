@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<SubscriberVM>
 
 @{
-    ViewData["Title"] = "Accueil";
+    ViewData["Title"] = "Newsletter";
 }
 
 <div class="container">
-    <h1>Subscribe to Newsletter</h1>
+    <div>@TempData["Message"]</div>
+    <h1>S'inscrire à l'infolettre</h1>
     <form method="post" action="/newsletter/subscribe">
         <div class="form-group">
             <label for="email">Email</label>
@@ -17,22 +18,44 @@
 
 
 <div class="container">
+
     <h1>Newsletter Subscribers</h1>
+    @foreach (var subscriber in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            @* <img src="..." class="card-img-top" alt="..."> *@
+            <div class="card-body">
+                <h5 class="card-title">@subscriber.Email</h5>
+                <p class="card-text">Est inscrit? @subscriber.IsSubscribed</p>
+            </div>
+        </div>
+    }
+
+    <h2>
+        Newsletter Subscribers - Vue partielle
+    </h2>
+    @foreach (var subscriber in Model)
+    {
+        @await Html.PartialAsync("_SubscriptionListingPartial", subscriber)
+
+    }
+
+    @*
     <table class="table">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Is Subscribed</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var subscriber in Model)
-            {
-                <tr>
-                    <td>@subscriber.Courriel</td>
-                    <td>@subscriber.IsSubscribed</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <thead>
+    <tr>
+    <th>Email</th>
+    <th>Is Subscribed</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var subscriber in Model)
+    {
+    <tr>
+    <td>@subscriber.Email</td>
+    <td>@subscriber.IsSubscribed</td>
+    </tr>
+    }
+    </tbody>
+    </table> *@
 </div>
