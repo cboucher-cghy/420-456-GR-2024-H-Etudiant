@@ -13,6 +13,6 @@ namespace GeniusChuck.NewsletterExample.Data
                 .HasDefaultValueSql("GETDATE()");
         }
 
-        public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; } = default!;
     }
 }
