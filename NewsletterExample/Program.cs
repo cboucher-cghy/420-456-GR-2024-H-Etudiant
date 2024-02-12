@@ -22,7 +22,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
     x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+
+//builder.Services.AddScoped<INewsletterService, NewsletterInMemoryService>(); // Liste en mémoire au lieu d'une BD.
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
+
 
 var app = builder.Build();
 
