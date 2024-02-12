@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exercice-Formulaire-Etudiant", "Exercice-Formulaire-Etudiant\Exercice-Formulaire-Etudiant.csproj", "{0FE8670D-A2EC-43DB-A944-D3D908379B7F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exercice-Formulaire-Seeder", "Exercice-Formulaire-Seeder\Exercice-Formulaire-Seeder.csproj", "{F6CD9B07-B504-46CA-9905-BE35530CCB48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FE8670D-A2EC-43DB-A944-D3D908379B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE8670D-A2EC-43DB-A944-D3D908379B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE8670D-A2EC-43DB-A944-D3D908379B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE8670D-A2EC-43DB-A944-D3D908379B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6CD9B07-B504-46CA-9905-BE35530CCB48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6CD9B07-B504-46CA-9905-BE35530CCB48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6CD9B07-B504-46CA-9905-BE35530CCB48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6CD9B07-B504-46CA-9905-BE35530CCB48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB503DC8-307B-4C71-851D-7A0C040697C4}
+	EndGlobalSection
+EndGlobal

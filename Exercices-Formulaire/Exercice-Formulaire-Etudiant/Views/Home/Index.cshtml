@@ -1,0 +1,19 @@
+﻿@model HomeVM
+
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Exercice de formulaire</h1>
+    <div id="message">
+        <p>
+            @TempData["message"]
+        </p>
+    </div>
+</div>
+<form method="POST" action="home/IndexPost">
+    <label asp-for="Price"></label>
+    <input asp-for="Price" />
+    <input type="submit" />
+</form>
