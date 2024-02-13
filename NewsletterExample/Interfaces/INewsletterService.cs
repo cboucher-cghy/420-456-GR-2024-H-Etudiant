@@ -5,7 +5,7 @@ namespace GeniusChuck.NewsletterExample.Interfaces
     public interface INewsletterService
     {
         List<Subscriber> GetSubscribers();
-        void Subscribe(Subscriber subscriber);
-        void Unsubscribe(string email);
+        int Subscribe(Subscriber subscriber);
+        int Unsubscribe(string email);
     }
 }

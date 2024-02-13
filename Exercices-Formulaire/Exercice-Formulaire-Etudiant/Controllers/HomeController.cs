@@ -6,21 +6,9 @@ namespace Exercice_Formulaire_Etudiant.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(HomeVM vm)
+        public IActionResult Index()
         {
-            vm.Price = 9.9;
-            return View(vm);
-        }
-
-        [HttpPost]
-        public IActionResult IndexPost(HomeVM vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(vm);
-            }
-            TempData["message"] = "Valeur bien reçue.";
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
         public IActionResult Privacy()

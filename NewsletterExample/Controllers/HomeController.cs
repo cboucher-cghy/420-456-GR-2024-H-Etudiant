@@ -4,25 +4,14 @@ using System.Diagnostics;
 
 namespace GeniusChuck.NewsletterExample.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController() : Controller
     {
         //[Route("yoyoyo")]
         //[Route("admin")]
         //[Route("{controller}/{action}/{name:minlength(2)}")]
-        public IActionResult Index(string? name, [FromQuery] string? lastname)
+        public IActionResult Index(/*string? name = "Chuck", [FromQuery] string? lastname = "Norris"*/)
         {
-            var person = new Person();
-
-            if (DateTime.Now.Second % 2 == 0)
-            {
-                person.Name = name;
-            }
-            else
-            {
-                person.Name = name;
-            }
-
-            return View(person);
+            return View();
         }
 
         public IActionResult Privacy()

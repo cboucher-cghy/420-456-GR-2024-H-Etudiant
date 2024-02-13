@@ -5,22 +5,25 @@ namespace GeniusChuck.NewsletterExample.Services
 {
     public class NewsletterInMemoryService() : INewsletterService
     {
-        private readonly HashSet<Subscriber> _context = new();
+        private readonly HashSet<Subscriber> _context = [];
+        private const int NO_CHANGE_VALUE = 0;
+        private const int CHANGE_VALUE = 1;
 
         public List<Subscriber> GetSubscribers() => new();
 
-        public void Subscribe(Subscriber subscriber)
+        public int Subscribe(Subscriber subscriber)
         {
-            _context.Add(subscriber);
+            return _context.Add(subscriber) ? CHANGE_VALUE : NO_CHANGE_VALUE;
         }
 
-        public void Unsubscribe(string email)
+        public int Unsubscribe(string email)
         {
             var subscriber = _context.FirstOrDefault(s => s.Email == email);
             if (subscriber != null)
             {
-                _context.Remove(subscriber);
+                return _context.Remove(subscriber) ? CHANGE_VALUE : NO_CHANGE_VALUE;
             }
+            return NO_CHANGE_VALUE;
         }
     }
 }

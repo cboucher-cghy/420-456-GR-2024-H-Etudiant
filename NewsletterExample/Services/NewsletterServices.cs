@@ -6,22 +6,25 @@ namespace GeniusChuck.NewsletterExample.Services
 {
     public class NewsletterService(ApplicationDbContext context) : INewsletterService
     {
-        public List<Subscriber> GetSubscribers() => context.Subscribers.ToList();
+        private readonly ApplicationDbContext _context = context;
 
-        public void Subscribe(Subscriber subscriber)
+        public List<Subscriber> GetSubscribers() => _context.Subscribers.ToList();
+
+        public int Subscribe(Subscriber subscriber)
         {
-            context.Subscribers.Add(subscriber);
-            context.SaveChanges();
+            _context.Subscribers.Add(subscriber);
+            return _context.SaveChanges();
         }
 
-        public void Unsubscribe(string email)
+        public int Unsubscribe(string email)
         {
-            var subscriber = context.Subscribers.FirstOrDefault(s => s.Email == email);
+            var subscriber = _context.Subscribers.FirstOrDefault(s => s.Email == email);
             if (subscriber != null)
             {
-                context.Subscribers.Remove(subscriber);
-                context.SaveChanges();
+                _context.Subscribers.Remove(subscriber);
+                return _context.SaveChanges();
             }
+            return 0;
         }
     }
 }
