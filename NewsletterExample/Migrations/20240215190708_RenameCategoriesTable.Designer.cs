@@ -4,6 +4,7 @@ using GeniusChuck.NewsletterExample.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeniusChuck.NewsletterExample.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240215190708_RenameCategoriesTable")]
+    partial class RenameCategoriesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,27 +49,6 @@ namespace GeniusChuck.NewsletterExample.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.CategorySubscriber", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubscriberId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SubscriptionDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Indique la date/heure de son inscription pour une catégorie donnée!");
-
-                    b.HasKey("CategoryId", "SubscriberId");
-
-                    b.HasIndex("SubscriberId");
-
-                    b.ToTable("CategorySubscriber");
-                });
-
             modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.Subscriber", b =>
                 {
                     b.Property<int>("Id")
@@ -88,15 +70,16 @@ namespace GeniusChuck.NewsletterExample.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Indique la date/heure de son inscription");
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Subscribers");
                 });
 
-            modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.CategorySubscriber", b =>
+            modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.Subscriber", b =>
                 {
                     b.HasOne("GeniusChuck.NewsletterExample.Models.Category", "Category")
                         .WithMany()
@@ -104,15 +87,7 @@ namespace GeniusChuck.NewsletterExample.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GeniusChuck.NewsletterExample.Models.Subscriber", "Subscriber")
-                        .WithMany()
-                        .HasForeignKey("SubscriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Subscriber");
                 });
 #pragma warning restore 612, 618
         }

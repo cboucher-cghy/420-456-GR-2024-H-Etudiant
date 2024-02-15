@@ -4,6 +4,7 @@ using GeniusChuck.NewsletterExample.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeniusChuck.NewsletterExample.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240215191330_ChangeSubscribersRelationToM2M")]
+    partial class ChangeSubscribersRelationToM2M
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace GeniusChuck.NewsletterExample.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CategorySubscriber", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscribersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoriesId", "SubscribersId");
+
+                    b.HasIndex("SubscribersId");
+
+                    b.ToTable("CategorySubscriber");
+                });
 
             modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.Category", b =>
                 {
@@ -46,27 +64,6 @@ namespace GeniusChuck.NewsletterExample.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.CategorySubscriber", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubscriberId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SubscriptionDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Indique la date/heure de son inscription pour une catégorie donnée!");
-
-                    b.HasKey("CategoryId", "SubscriberId");
-
-                    b.HasIndex("SubscriberId");
-
-                    b.ToTable("CategorySubscriber");
-                });
-
             modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.Subscriber", b =>
                 {
                     b.Property<int>("Id")
@@ -88,31 +85,26 @@ namespace GeniusChuck.NewsletterExample.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Indique la date/heure de son inscription");
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("Id");
 
                     b.ToTable("Subscribers");
                 });
 
-            modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.CategorySubscriber", b =>
+            modelBuilder.Entity("CategorySubscriber", b =>
                 {
-                    b.HasOne("GeniusChuck.NewsletterExample.Models.Category", "Category")
+                    b.HasOne("GeniusChuck.NewsletterExample.Models.Category", null)
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GeniusChuck.NewsletterExample.Models.Subscriber", "Subscriber")
+                    b.HasOne("GeniusChuck.NewsletterExample.Models.Subscriber", null)
                         .WithMany()
-                        .HasForeignKey("SubscriberId")
+                        .HasForeignKey("SubscribersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Subscriber");
                 });
 #pragma warning restore 612, 618
         }

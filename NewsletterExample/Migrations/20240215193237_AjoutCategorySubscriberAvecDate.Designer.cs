@@ -4,6 +4,7 @@ using GeniusChuck.NewsletterExample.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeniusChuck.NewsletterExample.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240215193237_AjoutCategorySubscriberAvecDate")]
+    partial class AjoutCategorySubscriberAvecDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,8 +60,7 @@ namespace GeniusChuck.NewsletterExample.Migrations
                     b.Property<DateTime>("SubscriptionDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Indique la date/heure de son inscription pour une catégorie donnée!");
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("CategoryId", "SubscriberId");
 
@@ -88,8 +90,7 @@ namespace GeniusChuck.NewsletterExample.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()")
-                        .HasComment("Indique la date/heure de son inscription");
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("Id");
 
