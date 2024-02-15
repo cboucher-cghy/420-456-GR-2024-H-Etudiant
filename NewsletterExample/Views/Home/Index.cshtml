@@ -1,22 +1,4 @@
-﻿@* @model Person
-@{
-    // var name = "John";
-    ViewData["Title"] = "Home Page";
-    for (int index = 0; index < 5; index++)
-    {
-        if (index % 2 == 0)
-        {
-            <p>Hello #@index from the Home/Index.cshtml file</p>
-        }
-        else
-        {
-            <p class="text-danger">Hello #@index from the Home/Index.cshtml file</p>
-        }
-        // <p>Hello #@index from the Home/Index.cshtml file</p>
-        Console.WriteLine($"Hello #{index} from the Home/Index.cshtml file");
-    }
-} *@
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 <div class="text-center">

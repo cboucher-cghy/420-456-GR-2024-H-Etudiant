@@ -14,7 +14,5 @@ namespace GeniusChuck.NewsletterExample.Data
         }
 
         public DbSet<Subscriber> Subscribers { get; set; }
-
-        public DbSet<Person> Personnes { get; set; }
     }
 }
