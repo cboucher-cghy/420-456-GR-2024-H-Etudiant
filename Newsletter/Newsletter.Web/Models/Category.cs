@@ -8,7 +8,7 @@
 
         public string Description { get; set; } = default!;
 
-        public ICollection<Subscriber> Subscribers { get; set; }
+        public ICollection<Subscriber> Subscribers { get; set; } = default!;
 
         public DateTime CreatedAt { get; set; }
     }

@@ -1,11 +1,10 @@
-using GeniusChuck.Newsletter.Web.Data;
 using GeniusChuck.Newsletter.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace GeniusChuck.Newsletter.Web.Controllers
 {
-    public class HomeController(ApplicationDbContext context) : Controller
+    public class HomeController() : Controller
     {
         public IActionResult Index()
         {
