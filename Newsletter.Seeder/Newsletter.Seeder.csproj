@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewsletterExample\Newsletter.Web.csproj" />
+    <ProjectReference Include="..\Newsletter.Web\Newsletter.Web.csproj" />
   </ItemGroup>
 
 </Project>
