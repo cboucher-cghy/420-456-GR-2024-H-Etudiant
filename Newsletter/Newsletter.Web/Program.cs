@@ -25,6 +25,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
 
 //builder.Services.AddScoped<INewsletterService, NewsletterInMemoryService>(); // Liste en mémoire au lieu d'une BD.
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
+//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 var app = builder.Build();
@@ -36,6 +37,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+//else
+//{
+//    app.UseDeveloperExceptionPage();
+//}
 
 
 app.UseHttpsRedirection();
