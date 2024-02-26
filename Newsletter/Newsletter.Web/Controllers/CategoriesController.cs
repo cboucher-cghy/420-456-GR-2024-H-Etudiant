@@ -1,5 +1,6 @@
 ﻿using GeniusChuck.Newsletter.Web.Data;
 using GeniusChuck.Newsletter.Web.Models;
+using GeniusChuck.Newsletter.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,7 +37,7 @@ namespace GeniusChuck.Newsletter.Web.Controllers
         // GET: Categories/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new CategoryCreateVM());
         }
 
         // POST: Categories/Create
@@ -44,15 +45,20 @@ namespace GeniusChuck.Newsletter.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,CreatedAt")] Category category)
+        public async Task<IActionResult> Create(/*[Bind("Id,Name,Description,CreatedAt")]*/ CategoryCreateVM vm)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(new Category()
+                {
+                    Id = 0,
+                    Description = vm.Description,
+                    Name = vm.Name,
+                });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(vm);
         }
 
         // GET: Categories/Edit/5
