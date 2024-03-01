@@ -8,7 +8,7 @@ namespace GeniusChuck.Newsletter.Web.Services
     {
         private readonly ApplicationDbContext _context = context;
 
-        public List<Subscriber> GetSubscribers() => _context.Subscribers.ToList();
+        public List<Subscriber> GetSubscribers() => _context.Subscribers.Take(5000).ToList(); // Limit the number to avoid OOM
 
         public int Subscribe(Subscriber subscriber)
         {

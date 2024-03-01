@@ -1,31 +1,31 @@
 ﻿using GeniusChuck.Newsletter.Web.Data;
-using GeniusChuck.Newsletter.Web.Models;
+using GeniusChuck.Newsletter.Web.Services;
 using GeniusChuck.Newsletter.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GeniusChuck.Newsletter.Web.Controllers
 {
-    public class CategoriesController(ApplicationDbContext context) : Controller
+    public class CategoriesController(ApplicationDbContext context, CategoryService categoryService) : Controller
     {
         private readonly ApplicationDbContext _context = context;
+        private readonly CategoryService _categoryService = categoryService;
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            var categories = _categoryService.GetAll();
+            return View(categories);
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = _categoryService.GetById(id.Value);
             if (category == null)
             {
                 return NotFound();
@@ -45,36 +45,38 @@ namespace GeniusChuck.Newsletter.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(/*[Bind("Id,Name,Description,CreatedAt")]*/ CategoryCreateVM vm)
+        public IActionResult Create(CategoryCreateVM vm)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(new Category()
-                {
-                    Id = 0,
-                    Description = vm.Description,
-                    Name = vm.Name,
-                });
-                await _context.SaveChangesAsync();
+                _categoryService.Add(vm);
+                TempData["Message"] = "Création en succès";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(vm);
         }
 
         // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            var category = _categoryService.GetById(id.Value);
             if (category == null)
             {
                 return NotFound();
             }
-            return View(category);
+
+            return View(new CategoryEditVM()
+            {
+                Description = category.Description,
+                Name = category.Name,
+                Id = category.Id
+            });
         }
 
         // POST: Categories/Edit/5
@@ -82,72 +84,55 @@ namespace GeniusChuck.Newsletter.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CreatedAt")] Category category)
+        public IActionResult Edit(int id, CategoryEditVM vm)
         {
-            if (id != category.Id)
+            if (id != vm.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
+                var isUpdated = _categoryService.Update(vm);
+                if (!isUpdated)
                 {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(vm);
         }
 
         // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            var vm = _categoryService.GetById(id.Value);
+            if (vm == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(vm);
         }
 
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var isDeleted = _categoryService.Remove(id);
+
+            if (!isDeleted)
             {
-                _context.Categories.Remove(category);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }

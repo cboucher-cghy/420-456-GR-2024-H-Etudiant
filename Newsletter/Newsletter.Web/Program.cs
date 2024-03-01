@@ -25,7 +25,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
 
 //builder.Services.AddScoped<INewsletterService, NewsletterInMemoryService>(); // Liste en mémoire au lieu d'une BD.
 builder.Services.AddScoped<INewsletterService, NewsletterService>();
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddScoped<CategoryService>();
 
 
 var app = builder.Build();
