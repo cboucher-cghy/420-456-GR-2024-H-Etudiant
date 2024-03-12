@@ -27,7 +27,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Repositories\" />
+		<Folder Include="Repositories\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="MyAnnotations.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>MyAnnotations.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="MyAnnotations.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>MyAnnotations.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

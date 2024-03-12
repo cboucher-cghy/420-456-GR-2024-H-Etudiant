@@ -22,6 +22,11 @@ namespace GeniusChuck.Newsletter.Web.Services
             return _context.SaveChanges();
         }
 
+        public bool Exists(string name)
+        {
+            return _context.Categories.Any(x => x.Name.Trim().ToLower() == name.Trim().ToLower());
+        }
+
         public async Task<bool> AddAsync(CategoryCreateVM vm)
         {
             var category = new Category()

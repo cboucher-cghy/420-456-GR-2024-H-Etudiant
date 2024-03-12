@@ -1,6 +1,8 @@
+using GeniusChuck.Newsletter.Web;
 using GeniusChuck.Newsletter.Web.Data;
 using GeniusChuck.Newsletter.Web.Interfaces;
 using GeniusChuck.Newsletter.Web.Services;
+using GeniusChuck.Newsletter.Web.Validations;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +10,24 @@ var builder = WebApplication.CreateBuilder(args);
 if (builder.Environment.IsDevelopment())
 {
     // Ajouter le RazorRuntimeCompilation seulement lorsqu'on est en mode développement
-    builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+    builder.Services.AddControllersWithViews()
+        .AddMvcOptions(options =>
+        {
+            // Utilisation d'un fichier de ressources pour traduire les messages par défaut des annotations de validation.
+            // Source: https://github.com/dotnet/aspnetcore/issues/4848#issuecomment-718060602
+            options.ModelMetadataDetailsProviders.Add(new MetadataTranslationProvider(typeof(MyAnnotations)));
+        })
+    .AddRazorRuntimeCompilation();
 }
 else
 {
-    builder.Services.AddControllersWithViews();
+    builder.Services.AddControllersWithViews()
+        .AddMvcOptions(options =>
+        {
+            // Utilisation d'un fichier de ressources pour traduire les messages par défaut des annotations de validation.
+            // Source: https://github.com/dotnet/aspnetcore/issues/4848#issuecomment-718060602
+            options.ModelMetadataDetailsProviders.Add(new MetadataTranslationProvider(typeof(MyAnnotations)));
+        });
 }
 
 // Add services to the container.
@@ -42,16 +57,15 @@ if (!app.Environment.IsDevelopment())
 //    app.UseDeveloperExceptionPage();
 //}
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapDefaultControllerRoute();
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
