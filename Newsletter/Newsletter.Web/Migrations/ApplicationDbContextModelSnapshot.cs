@@ -43,7 +43,7 @@ namespace GeniusChuck.Newsletter.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -94,7 +94,7 @@ namespace GeniusChuck.Newsletter.Web.Migrations
 
                     b.HasIndex("SubscriberId");
 
-                    b.ToTable("CategorySubscriber");
+                    b.ToTable("CategorySubscriber", (string)null);
                 });
 
             modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.Subscriber", b =>
@@ -123,7 +123,7 @@ namespace GeniusChuck.Newsletter.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscribers");
+                    b.ToTable("Subscribers", (string)null);
                 });
 
             modelBuilder.Entity("GeniusChuck.NewsletterExample.Models.CategorySubscriber", b =>
