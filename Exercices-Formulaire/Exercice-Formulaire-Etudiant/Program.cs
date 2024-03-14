@@ -24,8 +24,6 @@ CultureInfo.DefaultThreadCurrentCulture = ci;
 //Thread.CurrentThread.CurrentUICulture = ci;
 //Thread.CurrentThread.CurrentCulture = ci;
 
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
 builder.Services.AddDbContext<ApplicationDbContext>(x =>
 {
     x.UseLoggerFactory(LoggerFactory.Create(builder => { builder.AddConsole(); }));
